@@ -1,0 +1,43 @@
+<div class="auth-container">
+  <mat-card class="auth-card" appearance="outlined">
+    <h1 class="title">Regístrate</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" id="name" formControlName="name">
+        @if (registerForm.controls['name'].invalid && (registerForm.controls['name'].dirty || registerForm.controls['name'].touched)) {
+          <mat-error>
+            @if (registerForm.controls['name'].errors?.['required']) { <span>El nombre es requerido.</span> }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" formControlName="email">
+        @if (registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)) {
+          <mat-error>
+            @if (registerForm.controls['email'].errors?.['required']) { <span>El correo electrónico es requerido.</span> }
+            @if (registerForm.controls['email'].errors?.['email']) { <span>El correo electrónico no es válido.</span> }
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="password">
+        @if (registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)) {
+          <mat-error>
+            @if (registerForm.controls['password'].errors?.['required']) { <span>La contraseña es requerida.</span> }
+            @if (registerForm.controls['password'].errors?.['minlength']) { <span>La contraseña debe tener al menos 6 caracteres.</span> }
+          </mat-error>
+        }
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="full-width login-button" [disabled]="registerForm.invalid">Registrarse</button>
+      <p class="login-link">¿Ya tienes una cuenta? <a routerLink="/auth/login">Inicia sesión aquí</a></p>
+      @if (errorMessage) {
+          <div class="error-message">{{ errorMessage }}</div>
+      }
+    </form>
+  </mat-card>
+</div>

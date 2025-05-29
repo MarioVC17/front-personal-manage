@@ -1,0 +1,35 @@
+<div class="auth-container">
+  <mat-card class="auth-card" appearance="outlined">
+    <h1 class="title">Iniciar sesión</h1>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput type="email" formControlName="email" required>
+        @if (loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)) {
+          <mat-error>
+            @if (loginForm.controls['email'].errors?.['required']) { <span>El correo electrónico es requerido.</span> }
+            @if (loginForm.controls['email'].errors?.['email']) { <span>El correo electrónico no es válido.</span> }
+          </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="password" required>
+        @if (loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)) {
+          <mat-error>
+            @if (loginForm.controls['password'].errors?.['required']) { <span>La contraseña es requerida</span> }
+             @if (loginForm.controls['password'].errors?.['minlength']) { <span>La contraseña debe tener al menos 6 caracteres</span> }
+          </mat-error>
+        }
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="full-width login-button" type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+      <p class="register-link">¿No tienes una cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
+      @if (errorMessage) {
+          <div class="error-message">
+              {{ errorMessage }}
+          </div>
+      }
+    </form>
+  </mat-card>
+</div>
